@@ -1,17 +1,32 @@
 import React, { useState, useContext } from 'react'
 import '../SearchEmployee/SearchEmployee.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs'
 import { MainContext } from '../../ContextStore/MainContext';
+import Dropdown from 'react-bootstrap/Dropdown';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function SearchEmployee() {
   const [searchActive, setSearchActive] = useState(false);
   const { setEmployeeName } = useContext(MainContext)
+  const [isOpen, setIsOpen] = React.useState(false);
+    
+ 
+  
+      const handleMouseEnter = () => {
+          setIsOpen(true);
+      };
+  
+      const handleMouseLeave = () => {
+          setIsOpen(false);
+      };
 
   const toggleSearch = () => {
     setSearchActive(!searchActive);
   };
   const navigate = useNavigate()
+  const location=useLocation()
+  const { pathname } = location
 
   const professions = [
     {
@@ -53,14 +68,31 @@ export default function SearchEmployee() {
           />
           {searchActive && <p className='HomePageHeaderItems' onClick={() => navigate('/details')}>Search</p>}
 
-          <p className='HomePageHeaderItems' onClick={() => navigate('/')}>Home</p>
-          <p className='HomePageHeaderItems' >About US</p>
-          <p className='HomePageHeaderButtons' onClick={() => navigate('/signup')}>SignUp</p>
-          <p className='HomePageHeaderButtons'>Feedback</p>
-          <p className='HomePageHeaderButtons'>Get Involved</p>
+          <p className='HomePageHeaderItems' onClick={() => navigate('/home')}>Home</p>
+          <p className='HomePageHeaderItems' onClick={() => navigate('/about')}>About US</p>
+          <p className='HomePageHeaderButtons' onClick={() => navigate('/')}>Logout</p>
+          <Dropdown
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        show={isOpen}
+                    >
+                        <Dropdown.Toggle variant="light" id="dropdown-hover" className='HomePageHeaderItems'>
+                            <span>Our Misssion</span>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={()=>navigate('/online-education')}>Online Education</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>navigate('/women-education')}>Women Education</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>navigate('/school-education')}>School Education</Dropdown.Item>
+                        </Dropdown.Menu>
+          </Dropdown>
+
 
         </div>
       </div>
+      {
+        pathname==='/search' &&
+      
       <div className="Employees-List">
         {professions.length > 0 ? (
           <ul className="employee-list" >
@@ -81,6 +113,7 @@ export default function SearchEmployee() {
           <p style={{ textAlign: "center", color: 'white' }}>No employees found.</p>
         )}
       </div>
+}
     </div>
   )
 }

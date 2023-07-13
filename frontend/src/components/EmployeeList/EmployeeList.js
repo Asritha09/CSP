@@ -3,6 +3,7 @@ import axios from 'axios';
 import Markdown from "markdown-to-jsx";
 import '../EmployeeList/EmployeeList.css';
 import { MainContext } from '../../ContextStore/MainContext';
+import SearchEmployee from '../SearchEmployee/SearchEmployee';
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -59,9 +60,12 @@ const professions=[
 
   
   return (
-    <div className="Employee-component">
+    <div>
+      <SearchEmployee/>
+      <div className="Employee-component">
       <h1 style={{textAlign:"center"}}>{employeeName} Details</h1>
        <Markdown>{post}</Markdown>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,10 @@
 import React from 'react'
 import '../Signup/SignUp.css'
+import { useNavigate } from 'react-router-dom'
 // import Header from './Header'
 
 export default function SignUp() {
+    const navigate=useNavigate()
     return (
         <div>
             {/* <Header/> */}
@@ -75,7 +77,11 @@ export default function SignUp() {
 
                 </div>
 
-                <p className='GetInvolved'>SignUp</p>
+                <p className='GetInvolved' onClick={()=>navigate('/search')}>SignUp</p>
+
+                <p className='DontHave'>Already have an Account ? <span style={{fontWeight:"bold",color:"#1877f2",cursor:"pointer"}}
+                onClick={()=>navigate('/')}
+                >Login</span></p>
             </div>
         </div>
     )
